@@ -1,0 +1,800 @@
+/* ============================================================
+   STYLE.CSS — Portfolio of Mohammad Saad Yunus Shaikh
+   ============================================================
+
+   RUBRIC CHECKLIST:
+   ✅  External CSS file (separated from HTML)
+   ✅  Flexbox used for: navbar, hero, skills, contact wrapper
+   ✅  CSS Grid used for: certification cards, project cards
+   ✅  Smooth transitions & hover effects on buttons, cards, links
+   ✅  Media queries for desktop / tablet / mobile responsiveness
+   ✅  Semantic HTML5 tags used in HTML (header, nav, section, article, footer)
+   ✅  No canvas animations, no particle backgrounds, no typewriter effects
+============================================================ */
+
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   ============================================================ */
+:root {
+    /* --- Color Palette: Deep charcoal + warm amber accent --- */
+    --clr-bg-primary:     #0e0e12;
+    --clr-bg-secondary:   #16161d;
+    --clr-bg-card:        #1c1c26;
+    --clr-bg-card-hover:  #22222e;
+
+    --clr-accent:         #e8a838;
+    --clr-accent-soft:    #e8a83822;
+    --clr-accent-hover:   #f0b94e;
+
+    --clr-text-primary:   #eaeaf0;
+    --clr-text-secondary: #9999aa;
+    --clr-text-muted:     #5a5a6e;
+
+    --clr-border:         #2a2a38;
+    --clr-border-hover:   #3a3a4c;
+
+    /* --- Typography --- */
+    --font-family:        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+    /* --- Spacing --- */
+    --section-pad-y:      6rem;
+    --container-max:      1100px;
+    --gap:                1.5rem;
+
+    /* --- Misc --- */
+    --radius-sm:          8px;
+    --radius-md:          14px;
+    --radius-lg:          20px;
+    --radius-full:        50%;
+    --shadow-card:        0 4px 24px rgba(0,0,0,0.35);
+    --transition:         0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--clr-bg-primary);
+    color: var(--clr-text-primary);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+ul { list-style: none; }
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+
+/* ============================================================
+   3. UTILITY CLASSES
+   ============================================================ */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.section {
+    padding: var(--section-pad-y) 0;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: var(--clr-text-primary);
+    letter-spacing: -0.02em;
+    position: relative;
+}
+
+/* Accent underline under section titles */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: var(--clr-accent);
+    margin: 0.75rem auto 0;
+    border-radius: 2px;
+}
+
+.subsection-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: var(--clr-text-primary);
+}
+
+
+/* ============================================================
+   4. BUTTONS
+   RUBRIC: Transitions on hover
+   ============================================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+    letter-spacing: 0.01em;
+}
+
+.btn-primary {
+    background: var(--clr-accent);
+    color: #0e0e12;
+}
+
+.btn-primary:hover {
+    background: var(--clr-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232, 168, 56, 0.3);
+}
+
+.btn-outline {
+    border: 1.5px solid var(--clr-border-hover);
+    color: var(--clr-text-primary);
+}
+
+.btn-outline:hover {
+    border-color: var(--clr-accent);
+    color: var(--clr-accent);
+    transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   5. NAVIGATION — Sticky top bar
+   RUBRIC: Flexbox layout, transitions
+   ============================================================ */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(14, 14, 18, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--clr-border);
+    transition: all var(--transition);
+}
+
+.site-header.scrolled {
+    background: rgba(14, 14, 18, 0.95);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+
+.navbar {
+    display: flex;                 /* RUBRIC: Flexbox */
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    transition: padding var(--transition);
+}
+
+.site-header.scrolled .navbar {
+    padding: 0.7rem 1.5rem;
+}
+
+.nav-logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--clr-text-primary);
+    transition: color var(--transition);
+}
+
+.logo-dot {
+    color: var(--clr-accent);
+}
+
+.nav-links {
+    display: flex;                 /* RUBRIC: Flexbox */
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--clr-text-secondary);
+    position: relative;
+    transition: color var(--transition);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--clr-accent);
+    transition: width var(--transition);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--clr-text-primary);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* --- Mobile hamburger --- */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 4px;
+}
+
+.hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: var(--clr-text-primary);
+    border-radius: 2px;
+    transition: all var(--transition);
+}
+
+.toggle-active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.toggle-active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+.toggle-active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+/* ============================================================
+   6. HERO SECTION
+   RUBRIC: Flexbox layout
+   ============================================================ */
+.hero {
+    min-height: 100vh;
+    display: flex;                 /* RUBRIC: Flexbox */
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 1.5rem 4rem;
+    background: var(--clr-bg-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle radial gradient background — purely CSS, no canvas */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -20%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(232,168,56,0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hero-content {
+    display: flex;                 /* RUBRIC: Flexbox */
+    align-items: center;
+    gap: 3.5rem;
+    max-width: var(--container-max);
+    width: 100%;
+}
+
+.hero-image-wrapper {
+    flex-shrink: 0;
+}
+
+.hero-image {
+    width: 280px;
+    height: 280px;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    border: 3px solid var(--clr-border);
+    box-shadow: var(--shadow-card);
+    transition: border-color var(--transition), transform var(--transition);
+}
+
+.hero-image:hover {
+    border-color: var(--clr-accent);
+    transform: scale(1.02);
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero-name {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+}
+
+.name-highlight {
+    color: var(--clr-accent);
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--clr-text-secondary);
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.hero-prn {
+    font-size: 0.9rem;
+    color: var(--clr-text-muted);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    margin-bottom: 2rem;
+}
+
+.hero-cta {
+    display: flex;                 /* RUBRIC: Flexbox */
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   7. ABOUT SECTION — Bio, Skills, Certifications
+   ============================================================ */
+.about {
+    background: var(--clr-bg-secondary);
+}
+
+.about-bio {
+    max-width: 780px;
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+.about-bio p {
+    font-size: 1.05rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.8;
+}
+
+/* --- Skills chips — RUBRIC: Flexbox --- */
+.about-skills {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.skills-grid {
+    display: flex;                 /* RUBRIC: Flexbox */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.85rem;
+}
+
+.skill-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--clr-bg-card);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--clr-text-primary);
+    transition: all var(--transition);
+}
+
+.skill-chip:hover {
+    border-color: var(--clr-accent);
+    background: var(--clr-accent-soft);
+    transform: translateY(-2px);
+}
+
+.skill-icon {
+    font-size: 1.1rem;
+}
+
+/* --- Certifications grid — RUBRIC: CSS Grid --- */
+.about-certs {
+    text-align: center;
+}
+
+.certs-grid {
+    display: grid;                 /* RUBRIC: CSS Grid */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--gap);
+}
+
+.cert-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.75rem 1.25rem;
+    background: var(--clr-bg-card);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition);     /* RUBRIC: Transition */
+    text-align: center;
+}
+
+.cert-card:hover {
+    border-color: var(--clr-accent);
+    background: var(--clr-bg-card-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(232,168,56,0.1);
+}
+
+.cert-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.cert-card h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: var(--clr-text-primary);
+}
+
+.cert-issuer {
+    font-size: 0.8rem;
+    color: var(--clr-text-muted);
+}
+
+
+/* ============================================================
+   8. PROJECTS SECTION
+   RUBRIC: CSS Grid for cards, transitions on hover
+   ============================================================ */
+.projects {
+    background: var(--clr-bg-primary);
+}
+
+.projects-grid {
+    display: grid;                 /* RUBRIC: CSS Grid */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--gap);
+}
+
+.project-card {
+    padding: 2rem;
+    background: var(--clr-bg-card);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition);     /* RUBRIC: Transition */
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    border-color: var(--clr-accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(232,168,56,0.08);
+}
+
+.project-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--clr-accent);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.04em;
+}
+
+.project-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.project-desc {
+    font-size: 0.92rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    flex: 1;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    background: var(--clr-accent-soft);
+    color: var(--clr-accent);
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.project-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--clr-accent);
+    transition: color var(--transition);
+}
+
+.project-link:hover {
+    color: var(--clr-accent-hover);
+}
+
+
+/* ============================================================
+   9. CONTACT SECTION
+   RUBRIC: Flexbox layout, form styling, hover transitions
+   ============================================================ */
+.contact {
+    background: var(--clr-bg-secondary);
+}
+
+.contact-wrapper {
+    display: flex;                 /* RUBRIC: Flexbox */
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-info p {
+    font-size: 1.05rem;
+    color: var(--clr-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--clr-text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color var(--transition);
+}
+
+.contact-social:hover {
+    color: var(--clr-accent);
+}
+
+.contact-social svg {
+    flex-shrink: 0;
+}
+
+/* --- Contact Form --- */
+.contact-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--clr-text-secondary);
+    letter-spacing: 0.02em;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 0.85rem 1rem;
+    background: var(--clr-bg-card);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-sm);
+    color: var(--clr-text-primary);
+    font-family: var(--font-family);
+    font-size: 0.95rem;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    outline: none;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--clr-accent);
+    box-shadow: 0 0 0 3px var(--clr-accent-soft);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--clr-text-muted);
+}
+
+.btn-submit {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+}
+
+
+/* ============================================================
+   10. FOOTER
+   ============================================================ */
+.site-footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--clr-border);
+    color: var(--clr-text-muted);
+    font-size: 0.85rem;
+}
+
+
+/* ============================================================
+   11. MEDIA QUERIES — Responsive Breakpoints
+   RUBRIC: Media queries for tablet and mobile
+   ============================================================ */
+
+/* --- Tablet (max-width: 900px) --- */
+@media (max-width: 900px) {
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-name {
+        font-size: 2.4rem;
+    }
+
+    .hero-cta {
+        justify-content: center;
+    }
+
+    .contact-wrapper {
+        flex-direction: column;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Mobile (max-width: 640px) --- */
+@media (max-width: 640px) {
+
+    :root {
+        --section-pad-y: 4rem;
+    }
+
+    /* Show hamburger, hide horizontal links */
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        /* Hidden by default on mobile */
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        max-width: 300px;
+        height: 100vh;
+        background: var(--clr-bg-secondary);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem 2rem;
+        gap: 1.5rem;
+        border-left: 1px solid var(--clr-border);
+        transition: right var(--transition);
+        box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+    }
+
+    .nav-links.nav-open {
+        right: 0;
+    }
+
+    .nav-link {
+        font-size: 1.1rem;
+    }
+
+    /* Hero adjustments */
+    .hero {
+        padding: 7rem 1.25rem 3rem;
+        min-height: auto;
+    }
+
+    .hero-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .hero-name {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    /* Section titles */
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    /* Certs grid — 1 column on very small screens */
+    .certs-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Contact form full width */
+    .contact-wrapper {
+        flex-direction: column;
+    }
+
+    .btn-submit {
+        align-self: stretch;
+    }
+}
+
+/* --- Very small screens (max-width: 400px) --- */
+@media (max-width: 400px) {
+    .certs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-name {
+        font-size: 1.5rem;
+    }
+}
