@@ -17,15 +17,15 @@
    1. CSS CUSTOM PROPERTIES (Design Tokens)
    ============================================================ */
 :root {
-    /* --- Color Palette: Deep charcoal + warm amber accent --- */
+    /* --- Color Palette: Deep charcoal + cool cyan accent --- */
     --clr-bg-primary:     #0e0e12;
     --clr-bg-secondary:   #16161d;
     --clr-bg-card:        #1c1c26;
     --clr-bg-card-hover:  #22222e;
 
-    --clr-accent:         #e8a838;
-    --clr-accent-soft:    #e8a83822;
-    --clr-accent-hover:   #f0b94e;
+    --clr-accent:         #38bdf8;
+    --clr-accent-soft:    #38bdf822;
+    --clr-accent-hover:   #5ccdfb;
 
     --clr-text-primary:   #eaeaf0;
     --clr-text-secondary: #9999aa;
@@ -163,7 +163,7 @@ button {
 .btn-primary:hover {
     background: var(--clr-accent-hover);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(232, 168, 56, 0.3);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
 }
 
 .btn-outline {
@@ -311,7 +311,7 @@ button {
     right: -20%;
     width: 700px;
     height: 700px;
-    background: radial-gradient(circle, rgba(232,168,56,0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -463,7 +463,7 @@ button {
     border-color: var(--clr-accent);
     background: var(--clr-bg-card-hover);
     transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(232,168,56,0.1);
+    box-shadow: 0 8px 30px rgba(56,189,248,0.1);
 }
 
 .cert-icon {
@@ -511,7 +511,7 @@ button {
 .project-card:hover {
     border-color: var(--clr-accent);
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(232,168,56,0.08);
+    box-shadow: 0 12px 40px rgba(56,189,248,0.08);
 }
 
 .project-number {
